@@ -1,0 +1,5 @@
+{
+  "gemini_model": "gemini-1.5-flash",
+  "max_tweet_length": 140,
+  "prompt_file": "prompt.txt"
+}
