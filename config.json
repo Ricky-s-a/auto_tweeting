@@ -1,5 +1,8 @@
 {
-  "gemini_model": "gemini-1.5-flash",
+  "provider": "groq",
+  "gemini_model": "gemini-2.0-flash",
+  "grok_model": "grok-beta",
+  "groq_model": "llama-3.3-70b-versatile",
   "max_tweet_length": 140,
   "prompt_file": "prompt.txt"
 }

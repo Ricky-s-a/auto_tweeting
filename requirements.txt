@@ -1,3 +1,5 @@
 tweepy
 google-genai
 python-dotenv
+openai
+groq

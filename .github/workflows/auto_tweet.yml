@@ -2,8 +2,8 @@ name: Auto Tweet Bot
 
 on:
   schedule:
-    # Runs at 9:00 AM JST (00:00 UTC) every day
-    - cron: '0 0 * * *'
+    # Runs every 6 hours (UTC: 0, 6, 12, 18 / JST: 9, 15, 21, 3)
+    - cron: '0 */6 * * *'
   workflow_dispatch: # Allows manual run from GitHub UI
 
 jobs:
@@ -26,6 +26,7 @@ jobs:
 
     - name: Run Tweet Bot
       env:
+        GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
         TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
