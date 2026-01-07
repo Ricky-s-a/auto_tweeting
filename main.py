@@ -1,7 +1,7 @@
 import os
 import json
 import tweepy
-import google.generativeai as genai
+from google import genai
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -16,10 +16,13 @@ def read_prompt(prompt_path):
         return f.read()
 
 def generate_tweet(api_key, model_name, prompt):
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel(model_name)
+    # Initialize the new GenAI client
+    client = genai.Client(api_key=api_key)
     
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model=model_name,
+        contents=prompt
+    )
     return response.text.strip()
 
 def post_tweet(api_keys, tweet_content):
@@ -57,21 +60,25 @@ def main():
 
     # Generate Tweet content
     prompt_text = read_prompt(config["prompt_file"])
-    # Add constraint to prompt mostly to be safe, though model logic handles it
+    # Add constraint to prompt mostly to be safe
     full_prompt = f"{prompt_text}\n\n(Note: Keep it under {config['max_tweet_length']} characters)"
     
     print("Generating tweet content...")
-    tweet_content = generate_tweet(gemini_api_key, config["gemini_model"], full_prompt)
-    print(f"Generated Tweet:\n{tweet_content}\n")
-    
-    # Check length just in case
-    if len(tweet_content) > 280: # Twitter hard limit, though config said 140
-        print("Warning: Tweet exceeds 280 characters. Truncating...")
-        tweet_content = tweet_content[:280]
+    try:
+        tweet_content = generate_tweet(gemini_api_key, config["gemini_model"], full_prompt)
+        print(f"Generated Tweet:\n{tweet_content}\n")
+        
+        # Check length just in case
+        if len(tweet_content) > 280: 
+            print("Warning: Tweet exceeds 280 characters. Truncating...")
+            tweet_content = tweet_content[:280]
 
-    # Post Tweet
-    print("Posting to X...")
-    post_tweet(twitter_keys, tweet_content)
+        # Post Tweet
+        print("Posting to X...")
+        post_tweet(twitter_keys, tweet_content)
+        
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 if __name__ == "__main__":
     main()
