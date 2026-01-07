@@ -4,7 +4,6 @@
   "grok_model": "grok-beta",
   "groq_model": "llama-3.3-70b-versatile",
   "enable_random_delay": true,
-  "max_delay_minutes": 2,
-  "tweet_probability": 0.4,
+  "max_delay_minutes": 15,
   "prompt_file": "prompt.txt"
 }
