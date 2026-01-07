@@ -97,8 +97,25 @@ def post_tweet(api_keys, tweet_content):
     except Exception as e:
         print(f"Error posting tweet: {e}")
 
+import random
+
 def main():
     config = load_config()
+
+    # Random delay logic for human-like behavior
+    if config.get("enable_random_delay", False):
+        # 1. Probability check (Skip execution to be irregular and save Action minutes)
+        probability = config.get("tweet_probability", 1.0)
+        if random.random() > probability:
+            print("🎲 Random check: Skipping this hour to simulate human irregularity.")
+            return
+
+        # 2. Short random delay (0-2 mins) to vary exact timing
+        max_delay_min = config.get("max_delay_minutes", 0)
+        if max_delay_min > 0:
+            delay_sec = random.randint(0, max_delay_min * 60)
+            print(f"Simulating human behavior: Sleeping for {delay_sec} seconds before tweeting...")
+            time.sleep(delay_sec)
     
     twitter_keys = {
         "consumer_key": os.getenv("TWITTER_API_KEY"),
