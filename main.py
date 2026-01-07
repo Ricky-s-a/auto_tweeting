@@ -116,10 +116,15 @@ def main():
     try:
         # Generate tweet using the configured provider
         tweet_content = generate_tweet(config.get("provider", "gemini"), config, full_prompt)
-        print(f"Generated Tweet:\n{tweet_content}\n")
         
-        if len(tweet_content) > 280: 
-            tweet_content = tweet_content[:280]
+        try:
+            print(f"Generated Tweet:\n{tweet_content}\n")
+        except UnicodeEncodeError:
+            print("Generated Tweet: (Content hidden due to console encoding limits)")
+            # print(repr(tweet_content)) # Uncomment to debug raw content
+        
+        if len(tweet_content) > config['max_tweet_length']: 
+            tweet_content = tweet_content[:config['max_tweet_length']]
 
         post_tweet(twitter_keys, tweet_content)
         
