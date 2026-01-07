@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X Analytics Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="background-glow"></div>
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <i class="fa-brands fa-x-twitter"></i>
+                <h1>Analytics<span class="highlight">Pro</span></h1>
+            </div>
+            <div class="status-indicator">
+                <span class="dot"></span> Live
+            </div>
+        </header>
+
+        <main class="dashboard-grid">
+            <!-- Profile Section -->
+            <section class="profile-card glass-panel" id="profile-section">
+                <div class="loading-spinner"></div>
+            </section>
+
+            <!-- Stats Overview -->
+            <section class="chart-section glass-panel" id="chart-section"
+                style="grid-area: chart; margin-bottom: 2rem;">
+                <h2>Growth Trends</h2>
+                <div style="height: 300px;">
+                    <canvas id="growthChart"></canvas>
+                </div>
+            </section>
+
+            <section class="stats-grid" id="stats-section">
+                <!-- Stats will be injected here -->
+            </section>
+
+            <!-- Recent Tweets -->
+            <section class="tweets-feed glass-panel">
+                <div class="feed-header">
+                    <h2>Tweet Analysis</h2>
+                    <div class="filters">
+                        <button class="filter-btn active" onclick="filterTweets('latest')">Latest</button>
+                        <button class="filter-btn" onclick="filterTweets('impressions')">Impressions</button>
+                        <button class="filter-btn" onclick="filterTweets('likes')">Likes</button>
+                        <button class="filter-btn" onclick="filterTweets('retweets')">Retweets</button>
+                    </div>
+                </div>
+                <div id="tweets-list" class="tweets-list">
+                    <div class="loading-spinner"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Templates -->
+    <template id="profile-template">
+        <div class="profile-header">
+            <img src="" alt="Profile" class="profile-img">
+            <div class="profile-info">
+                <h2 class="name"></h2>
+                <p class="handle"></p>
+            </div>
+        </div>
+        <p class="bio"></p>
+        <div class="profile-meta">
+            <span class="joined"><i class="far fa-calendar-alt"></i> Joined <span class="date"></span></span>
+        </div>
+    </template>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
