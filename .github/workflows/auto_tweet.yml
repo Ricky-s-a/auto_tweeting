@@ -2,8 +2,8 @@ name: Auto Tweet Bot
 
 on:
   schedule:
-    # Runs every hour (UTC) to tweet frequently with random delays
-    - cron: '0 * * * *'
+    # Runs every minute
+    - cron: '* * * * *'
   workflow_dispatch: # Allows manual run from GitHub UI
 
 jobs:
