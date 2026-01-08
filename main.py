@@ -27,7 +27,7 @@ def generate_tweet_gemini(api_key, model_name, prompt):
     )
     return response.text.strip()
 
-def generate_tweet_grok(api_key, model_name, prompt):
+def generate_tweet_grok(api_key, model_name, prompt, temperature=0.7):
     client = OpenAI(
         api_key=api_key,
         base_url="https://api.x.ai/v1",
@@ -38,16 +38,18 @@ def generate_tweet_grok(api_key, model_name, prompt):
             {"role": "system", "content": "You are a helpful assistant that writes tweets."},
             {"role": "user", "content": prompt},
         ],
+        temperature=temperature,
     )
     return response.choices[0].message.content.strip()
 
-def generate_tweet_groq(api_key, model_name, prompt):
+def generate_tweet_groq(api_key, model_name, prompt, temperature=0.7):
     client = Groq(api_key=api_key)
     chat_completion = client.chat.completions.create(
         messages=[
             {"role": "user", "content": prompt}
         ],
         model=model_name,
+        temperature=temperature,
     )
     return chat_completion.choices[0].message.content.strip()
 
@@ -55,21 +57,25 @@ def generate_tweet(provider, config, prompt, max_retries=3):
     for attempt in range(max_retries):
         try:
             print(f"Attempting to generate tweet using {provider}...")
+            temperature = config.get("temperature", 0.7)
             
             if provider == "gemini":
                 api_key = os.getenv("GEMINI_API_KEY")
                 if not api_key: raise ValueError("GEMINI_API_KEY not found")
+                # Gemini support for temperature requires updating the call or client config, 
+                # but for now let's focus on Groq as requested or kept by user.
+                # If the user switches back to Gemini later, we can add it properly.
                 return generate_tweet_gemini(api_key, config["gemini_model"], prompt)
                 
             elif provider == "grok":
                 api_key = os.getenv("XAI_API_KEY")
                 if not api_key: raise ValueError("XAI_API_KEY not found")
-                return generate_tweet_grok(api_key, config["grok_model"], prompt)
+                return generate_tweet_grok(api_key, config["grok_model"], prompt, temperature)
                 
             elif provider == "groq":
                 api_key = os.getenv("GROQ_API_KEY")
                 if not api_key: raise ValueError("GROQ_API_KEY not found")
-                return generate_tweet_groq(api_key, config["groq_model"], prompt)
+                return generate_tweet_groq(api_key, config["groq_model"], prompt, temperature)
             
             else:
                 raise ValueError(f"Unknown provider: {provider}")

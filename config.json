@@ -6,5 +6,6 @@
   "enable_random_delay": true,
   "max_delay_minutes": 15,
   "prompt_file": "prompt.txt",
-  "max_tweet_length": 140
+  "max_tweet_length": 140,
+  "temperature": 0.9
 }
