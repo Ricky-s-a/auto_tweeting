@@ -2,6 +2,7 @@ import os
 import json
 import tweepy
 import time
+from datetime import datetime, timedelta, timezone
 from google import genai
 from openai import OpenAI
 from groq import Groq
@@ -101,6 +102,13 @@ import random
 
 def main():
     config = load_config()
+
+    # Time restriction: 00:00 - 06:00 JST
+    jst = timezone(timedelta(hours=9))
+    current_time = datetime.now(jst)
+    if 0 <= current_time.hour < 6:
+        print(f"Current time is {current_time.strftime('%H:%M')} JST. Skipping tweet during night hours (00:00 - 06:00).")
+        return
 
     # Random delay logic for human-like behavior
     if config.get("enable_random_delay", False):
