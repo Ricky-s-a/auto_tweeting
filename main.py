@@ -2,6 +2,7 @@ import os
 import json
 import tweepy
 import time
+import argparse
 from datetime import datetime, timedelta, timezone
 from google import genai
 from openai import OpenAI
@@ -11,7 +12,7 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-def load_config(config_path="config.json"):
+def load_config(config_path):
     with open(config_path, "r", encoding="utf-8") as f:
         return json.load(f)
 
@@ -107,7 +108,11 @@ def post_tweet(api_keys, tweet_content):
 import random
 
 def main():
-    config = load_config()
+    parser = argparse.ArgumentParser(description='Auto Tweeting Bot')
+    parser.add_argument('--config', type=str, default='config.json', help='Path to the configuration file')
+    args = parser.parse_args()
+
+    config = load_config(args.config)
 
     # Time restriction: 00:00 - 06:00 JST
     jst = timezone(timedelta(hours=9))
@@ -131,15 +136,20 @@ def main():
             print(f"Simulating human behavior: Sleeping for {delay_sec} seconds before tweeting...")
             time.sleep(delay_sec)
     
+    # Get Twitter API keys based on the prefix defined in config
+    env_prefix = config.get("twitter_env_prefix", "TWITTER")
+    
     twitter_keys = {
-        "consumer_key": os.getenv("TWITTER_API_KEY"),
-        "consumer_secret": os.getenv("TWITTER_API_SECRET"),
-        "access_token": os.getenv("TWITTER_ACCESS_TOKEN"),
-        "access_token_secret": os.getenv("TWITTER_ACCESS_TOKEN_SECRET")
+        "consumer_key": os.getenv(f"{env_prefix}_API_KEY"),
+        "consumer_secret": os.getenv(f"{env_prefix}_API_SECRET"),
+        "access_token": os.getenv(f"{env_prefix}_ACCESS_TOKEN"),
+        "access_token_secret": os.getenv(f"{env_prefix}_ACCESS_TOKEN_SECRET")
     }
     
     if not all(twitter_keys.values()):
-        raise ValueError("One or more Twitter API keys are missing")
+        # Debug helper: print which keys are missing (without printing values)
+        missing = [k for k, v in twitter_keys.items() if not v]
+        raise ValueError(f"One or more Twitter API keys are missing for prefix {env_prefix}: {missing}")
 
     prompt_text = read_prompt(config["prompt_file"])
     full_prompt = f"{prompt_text}\n\n(Note: Keep it under {config['max_tweet_length']} characters)"

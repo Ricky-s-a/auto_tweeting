@@ -7,5 +7,6 @@
   "max_delay_minutes": 15,
   "prompt_file": "prompt.txt",
   "max_tweet_length": 140,
-  "temperature": 0.9
+  "temperature": 0.9,
+  "twitter_env_prefix": "TWITTER"
 }
