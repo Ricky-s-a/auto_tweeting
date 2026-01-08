@@ -3,7 +3,7 @@
   "gemini_model": "gemini-2.0-flash",
   "grok_model": "grok-beta",
   "groq_model": "llama-3.3-70b-versatile",
-  "enable_random_delay": true,
+  "enable_random_delay": false,
   "max_delay_minutes": 15,
   "prompt_file": "prompt.txt",
   "max_tweet_length": 140,
