@@ -161,7 +161,7 @@ def main():
     
     try:
         # Generate tweet using the configured provider
-        tweet_content = generate_tweet(config.get("provider", "gemini"), config, full_prompt)
+        tweet_content = generate_tweet(config.get("provider", "gemini"), config, full_prompt).strip().strip('"')
         
         try:
             print(f"Generated Tweet:\n{tweet_content}\n")

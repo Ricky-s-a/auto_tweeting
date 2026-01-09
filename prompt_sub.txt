@@ -5,7 +5,7 @@ Please choose one of the following themes:
 
 1. **Funny/Weird Japanese:**
    - Introduce a slang term, a funny onomatopoeia, or a phrase with a hilarious literal translation.
-   - Format: "Japanese (Romaji): Meaning"
+   - Format: Japanese (Romaji): Meaning
    - Add a witty comment or joke about it.
 
 2. **Quirky Japan Fact:**
@@ -17,4 +17,5 @@ Please choose one of the following themes:
 - Keep it under **140 characters**.
 - Be humorous, casual, and engaging!
 - Use fun emojis (e.g., 🤣, 🤯, 🍡).
+- Do not enclose the output in quotation marks.
 - Hashtags: #CoolJapan #WeirdJapan #JapanLife
