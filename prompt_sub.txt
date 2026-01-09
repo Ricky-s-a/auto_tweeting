@@ -14,7 +14,7 @@ Please choose one of the following themes:
 
 **Constraints:**
 - The ENTIRE tweet must be in **English** (except for the Japanese term).
-- Keep it under **140 characters**.
+- Keep it under **280 characters**.
 - Be humorous, casual, and engaging!
 - Use fun emojis (e.g., 🤣, 🤯, 🍡).
 - Do not enclose the output in quotation marks.
