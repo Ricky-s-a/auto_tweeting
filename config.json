@@ -6,7 +6,7 @@
   "enable_random_delay": false,
   "max_delay_minutes": 15,
   "prompt_file": "prompt.txt",
-  "max_tweet_length": 280,
+  "max_tweet_length": 270,
   "temperature": 0.9,
   "twitter_env_prefix": "TWITTER"
 }

@@ -14,9 +14,9 @@ Please choose one of the following themes:
 
 **Constraints:**
 - The ENTIRE tweet must be in **English** (except for the Japanese term).
-- Keep it under **280 characters**.
-- **Don't be too brief!** You have 280 characters, so please explain the context, give examples, or make the joke funnier with more detail.
-- Target length: 200-260 characters.
+- Keep it under **270 characters**.
+- **Don't be too brief!** You have 270 characters, so please explain the context, give examples, or make the joke funnier with more detail.
+- Target length: 200-250 characters.
 - Be humorous, casual, and engaging!
 - Use fun emojis (e.g., 🤣, 🤯, 🍡).
 - Do not enclose the output in quotation marks.
