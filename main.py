@@ -148,8 +148,13 @@ def main():
     
     if not all(twitter_keys.values()):
         # Debug helper: print which keys are missing (without printing values)
-        missing = [k for k, v in twitter_keys.items() if not v]
-        raise ValueError(f"One or more Twitter API keys are missing for prefix {env_prefix}: {missing}")
+        missing_env_vars = []
+        if not twitter_keys["consumer_key"]: missing_env_vars.append(f"{env_prefix}_API_KEY")
+        if not twitter_keys["consumer_secret"]: missing_env_vars.append(f"{env_prefix}_API_SECRET")
+        if not twitter_keys["access_token"]: missing_env_vars.append(f"{env_prefix}_ACCESS_TOKEN")
+        if not twitter_keys["access_token_secret"]: missing_env_vars.append(f"{env_prefix}_ACCESS_TOKEN_SECRET")
+        
+        raise ValueError(f"One or more Twitter API keys are missing for prefix {env_prefix}. Missing environment variables: {missing_env_vars}")
 
     prompt_text = read_prompt(config["prompt_file"])
     full_prompt = f"{prompt_text}\n\n(Note: Keep it under {config['max_tweet_length']} characters)"
